@@ -46,8 +46,12 @@ public class Application implements CommandLineRunner {
         // TODO check input (and check services for TODOs)
 
         var rentalAgreement = rentalService.createRentalAgreement(toolCode, rentalDayCount, discountPercent, checkOutDate);
+        System.out.println(rentalAgreement);
+
+        // TODO add service unit tests per spec
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static String promptAndGatherStringInput(Scanner scanner, String prompt) {
         return promptAndGatherStringInput(scanner, prompt, null);
     }
@@ -68,6 +72,7 @@ public class Application implements CommandLineRunner {
         return intValue;
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static LocalDate promptAndGatherDateInput(Scanner scanner, String prompt, LocalDate defaultValue) {
         var dateFormatter = DateTimeFormatter.ofPattern("M/d/yy");
         var stringValue = promptAndGatherStringInput(scanner, prompt, defaultValue.format(dateFormatter));

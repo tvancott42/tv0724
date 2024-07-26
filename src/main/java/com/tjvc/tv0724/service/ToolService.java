@@ -33,6 +33,7 @@ public class ToolService {
     }
 
     // This doesn't really need to be in the service as of now, but leaving it in case it changes over time
+    // TODO return partially populated RentalAgreement w/ chargeable days instead
     public MoneyAmount computeToolRental(ToolType toolType,
                                                  LocalDate checkOutDate,
                                                  int rentalDayCount) {
