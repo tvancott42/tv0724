@@ -9,6 +9,7 @@ import java.util.Map;
 
 @Repository
 public class ToolRepository {
+    // TODO separate impl from interface
 
     // Note: Could be ported to a relational DB w/ unique index or PK on tool code
     private final Map<String, Tool> tools = Map.of(

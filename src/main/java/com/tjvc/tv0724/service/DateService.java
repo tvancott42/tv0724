@@ -15,7 +15,6 @@ import java.util.stream.Stream;
  */
 @Service
 public class DateService {
-    // TODO separate impl from interface
 
     private final List<String> holidayDates;
 

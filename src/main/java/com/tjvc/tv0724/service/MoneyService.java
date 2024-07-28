@@ -17,14 +17,20 @@ public class MoneyService {
         this.locale = Locale.forLanguageTag(localeString.replace('_', '-')); // Make the locale uniform
     }
 
-    public TotalAmountWithDiscount computeLineItemTotal(BigDecimal amount, int quantity, int discountPercentage) {
-        var subtotal = amount.multiply(new BigDecimal(quantity));
-        var subtotalMoneyAmount = new MoneyAmount(subtotal, locale);
+    public MoneyAmount createMoneyAmount(BigDecimal amount) {
+        return new MoneyAmount(amount, locale);
+    }
 
-        var discountAmountValue = subtotal.multiply(new BigDecimal(discountPercentage))
+    public MoneyAmount computeLineItemTotal(BigDecimal amount, int quantity) {
+        var subtotal = amount.multiply(new BigDecimal(quantity));
+        return new MoneyAmount(subtotal, locale);
+    }
+
+    public TotalAmountWithDiscount applyDiscount(BigDecimal amount, int discountPercentage) {
+        var discountAmountValue = amount.multiply(new BigDecimal(discountPercentage))
                 .divide(new BigDecimal("100"), RoundingMode.HALF_UP);
         var discountMoneyAmount = new MoneyAmount(discountAmountValue, locale);
 
-        return new TotalAmountWithDiscount(subtotalMoneyAmount, discountMoneyAmount, locale);
+        return new TotalAmountWithDiscount(new MoneyAmount(amount, locale), discountMoneyAmount, locale);
     }
 }

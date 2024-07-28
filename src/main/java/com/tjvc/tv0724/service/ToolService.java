@@ -1,8 +1,6 @@
 package com.tjvc.tv0724.service;
 
-import com.tjvc.tv0724.model.MoneyAmount;
-import com.tjvc.tv0724.model.Tool;
-import com.tjvc.tv0724.model.ToolType;
+import com.tjvc.tv0724.model.*;
 import com.tjvc.tv0724.repo.ToolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +30,10 @@ public class ToolService {
         return toolRepository.getToolByCode(code);
     }
 
-    // This doesn't really need to be in the service as of now, but leaving it in case it changes over time
-    // TODO return partially populated RentalAgreement w/ chargeable days instead
-    public MoneyAmount computeToolRental(ToolType toolType,
-                                                 LocalDate checkOutDate,
-                                                 int rentalDayCount) {
+    // This doesn't really need to be in the service as of now, but leaving it in case its behavior changes over time
+    public ToolRentalCalculationResult computeToolRental(ToolType toolType,
+                                                         LocalDate checkOutDate,
+                                                         int rentalDayCount) {
         assert toolType != null;
         assert rentalDayCount > 0;
         assert checkOutDate != null;
@@ -57,6 +54,7 @@ public class ToolService {
             }
             ++chargeableDays; // Otherwise do charge for this date
         }
-        return moneyService.computeLineItemTotal(toolType.getDailyCharge(), chargeableDays, 0);
+        var rentalCharge = moneyService.computeLineItemTotal(toolType.getDailyCharge(), chargeableDays);
+        return new ToolRentalCalculationResult(rentalCharge, chargeableDays);
     }
 }

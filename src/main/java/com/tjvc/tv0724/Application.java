@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -26,7 +27,7 @@ public class Application implements CommandLineRunner {
     public void run(String... args) {
         System.out.println("""
                 Welcome to Tool Rental Checkout
-                
+                                
                 Please enter a tool code from the following list:
                 """);
 
@@ -34,21 +35,35 @@ public class Application implements CommandLineRunner {
 
         var scanner = new Scanner(System.in);
         var toolCode = promptAndGatherStringInput(scanner, "tool code");
-        // TODO check input (and check services for TODOs)
+        while (toolCode.isEmpty()) {
+            System.out.println("Tool code is required, please enter a valid tool code.");
+            toolCode = promptAndGatherStringInput(scanner, "tool code");
+        }
 
         var rentalDayCount = promptAndGatherIntInput(scanner, "number of days to rent", 1);
-        // TODO check input (and check services for TODOs)
 
         var discountPercent = promptAndGatherIntInput(scanner, "discount %", 0);
-        // TODO check input (and check services for TODOs)
 
-        var checkOutDate = promptAndGatherDateInput(scanner, "check out date", LocalDate.now());
-        // TODO check input (and check services for TODOs)
+        LocalDate checkOutDate = null;
+        while (checkOutDate == null) {
+            try {
+                checkOutDate = promptAndGatherDateInput(scanner, "check out date", LocalDate.now());
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please enter a date in MM/dd/yy format.");
+            }
+        }
 
-        var rentalAgreement = rentalService.createRentalAgreement(toolCode, rentalDayCount, discountPercent, checkOutDate);
-        System.out.println(rentalAgreement);
-
-        // TODO add service unit tests per spec
+        try {
+            var rentalAgreement = rentalService.createRentalAgreement(
+                    toolCode.toUpperCase(), rentalDayCount, discountPercent, checkOutDate);
+            System.out.println();
+            rentalAgreement.printRentalAgreementReport();
+        } catch (IllegalArgumentException exc) {
+            System.out.println(exc.getMessage());
+            System.out.println("Press enter to continue.");
+            scanner.nextLine();
+            run(args);
+        }
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -74,7 +89,7 @@ public class Application implements CommandLineRunner {
 
     @SuppressWarnings("SameParameterValue")
     private static LocalDate promptAndGatherDateInput(Scanner scanner, String prompt, LocalDate defaultValue) {
-        var dateFormatter = DateTimeFormatter.ofPattern("M/d/yy");
+        var dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yy");
         var stringValue = promptAndGatherStringInput(scanner, prompt, defaultValue.format(dateFormatter));
         LocalDate dateValue;
         if (stringValue == null || stringValue.isEmpty()) {
