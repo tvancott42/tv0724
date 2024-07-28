@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 
 @Getter
 public enum ToolType {
-    Ladder("1.99", true, true, false),
     Chainsaw("1.49", true, false, true),
+    Ladder("1.99", true, true, false),
     Jackhammer("2.99", true, false, false);
 
     private final BigDecimal dailyCharge;

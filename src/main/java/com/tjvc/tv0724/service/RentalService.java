@@ -1,10 +1,12 @@
 package com.tjvc.tv0724.service;
 
 import com.tjvc.tv0724.model.RentalAgreement;
+import com.tjvc.tv0724.model.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,9 +22,14 @@ public class RentalService {
     }
 
     public String getToolListing() {
+        // Even formatting of columns
         String format = "%-10s |\t%-15s |\t%-10s%n";
         StringBuilder output = new StringBuilder();
-        var tools = toolService.getAllTools();
+
+        // Sort Tools by Type, then Code
+        var tools = toolService.getAllTools().stream()
+                .sorted(Comparator.comparing(Tool::getType).thenComparing(Tool::getCode))
+                .toList();
 
         output.append(String.format(format, "Tool Code", "Tool Type", "Brand"));
         output.append("--------------------------------------------\n");
@@ -35,11 +42,11 @@ public class RentalService {
      * Creates a RentalAgreement based upon the inputs, and calculates the number of chargeable days given logic in
      * @see DateService
      *
-     * @param toolCode
-     * @param rentalDayCount
-     * @param discountPercent
-     * @param checkOutDate
-     * @return
+     * @param toolCode The Tool Code of the Tool to rent
+     * @param rentalDayCount Number of days to rent the Tool
+     * @param discountPercent Discount percent from 0 to 100
+     * @param checkOutDate The date the Tool is being rented or checked out
+     * @return A fully populated RentalAgreement including calculated charge and discount
      */
     public RentalAgreement createRentalAgreement(String toolCode,
                                                  int rentalDayCount,
