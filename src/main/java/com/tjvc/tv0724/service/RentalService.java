@@ -23,9 +23,15 @@ public class RentalService {
     }
 
     public String getToolListing() {
+        String format = "%-10s |\t%-15s |\t%-10s%n";
+        StringBuilder output = new StringBuilder();
         var tools = toolService.getAllTools();
-        var toolListing = "Tool Code" + DELIMITER + "Tool Type" + DELIMITER + "Brand";
-        return toolListing + "\n" + tools.stream().map(Tool::toString).collect(Collectors.joining("\n"));
+
+        output.append(String.format(format, "Tool Code", "Tool Type", "Brand"));
+        output.append("--------------------------------------------\n");
+        output.append(tools.stream().map(tool -> String.format(format, tool.getCode(), tool.getType(), tool.getBrand()))
+                .collect(Collectors.joining()));
+        return output.toString();
     }
 
     /**

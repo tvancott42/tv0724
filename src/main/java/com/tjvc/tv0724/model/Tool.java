@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Tool {
 
-    public static final String DELIMITER = "\t\t|\t\t";
+    public static final String DELIMITER = "\t|\t";
 
     private String code;
     private ToolType type;

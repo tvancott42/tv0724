@@ -101,7 +101,7 @@ public class Application implements CommandLineRunner {
     }
 
     private static void promptForInput(String prompt, String defaultValue) {
-        System.out.printf("Enter the %s %s: ", prompt, defaultValue == null ? "" : "[" + defaultValue + "]");
+        System.out.printf("Enter the %s%s: ", prompt, defaultValue == null ? "" : " [" + defaultValue + "]");
     }
 
 }
