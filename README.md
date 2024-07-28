@@ -7,6 +7,6 @@ features.
 swapped in.
 
 ### How to test or run
-- Integration tests for the overall rental calculation logic can be found in IntegrationTests
+- Integration tests for the overall rental calculation logic can be found in IntegrationTests.
 - The app can be run as a console app where you can input values manually for tool rental checkout and see user-friendly 
-error messaging
+error messaging.

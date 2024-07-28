@@ -44,6 +44,7 @@ public class RentalService {
         if (tool == null) {
             throw new IllegalArgumentException("Tool code not found: " + toolCode);
         }
+
         var rentalCalculationResult = toolService.computeToolRental(tool.getType(), checkOutDate, rentalDayCount);
         var totalWithDiscount = moneyService.applyDiscount(
                 rentalCalculationResult.rentalCharge().getAmount(), discountPercent);

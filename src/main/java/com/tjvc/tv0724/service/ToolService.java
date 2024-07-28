@@ -1,6 +1,8 @@
 package com.tjvc.tv0724.service;
 
-import com.tjvc.tv0724.model.*;
+import com.tjvc.tv0724.model.Tool;
+import com.tjvc.tv0724.model.ToolRentalCalculationResult;
+import com.tjvc.tv0724.model.ToolType;
 import com.tjvc.tv0724.repo.ToolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
