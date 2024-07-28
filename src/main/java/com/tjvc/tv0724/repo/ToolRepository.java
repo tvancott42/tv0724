@@ -1,29 +1,25 @@
 package com.tjvc.tv0724.repo;
 
 import com.tjvc.tv0724.model.Tool;
-import com.tjvc.tv0724.model.ToolType;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
-import java.util.Map;
 
 @Repository
-public class ToolRepository {
-    // TODO separate impl from interface
+public interface ToolRepository {
 
-    // Note: Could be ported to a relational DB w/ unique index or PK on tool code
-    private final Map<String, Tool> tools = Map.of(
-            "CHNS", new Tool("CHNS", ToolType.Chainsaw, "Stihl"),
-            "LADW", new Tool("LADW", ToolType.Ladder, "Werner"),
-            "JAKD", new Tool("JAKD", ToolType.Jackhammer, "DeWalt"),
-            "JAKR", new Tool("JAKR", ToolType.Jackhammer, "Ridgid")
-    );
+    /**
+     * Gets all the tools available in the data source.
+     *
+     * @return Collection of populated Tool objects
+     */
+    Collection<Tool> findAllTools();
 
-    public Collection<Tool> getAllTools() {
-        return tools.values();
-    }
-
-    public Tool getToolByCode(String toolCode) {
-        return tools.get(toolCode);
-    }
+    /**
+     * Looks up a Tool by its Tool Code.
+     *
+     * @param toolCode Tool Code identifier for the Tool to look up
+     * @return Populated Tool object
+     */
+    Tool findToolByCode(String toolCode);
 }

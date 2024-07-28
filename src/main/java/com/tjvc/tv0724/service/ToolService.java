@@ -25,11 +25,11 @@ public class ToolService {
     }
 
     public Collection<Tool> getAllTools() {
-        return toolRepository.getAllTools();
+        return toolRepository.findAllTools();
     }
 
     public Tool getToolByCode(String code) {
-        return toolRepository.getToolByCode(code);
+        return toolRepository.findToolByCode(code);
     }
 
     // This doesn't really need to be in the service as of now, but leaving it in case its behavior changes over time

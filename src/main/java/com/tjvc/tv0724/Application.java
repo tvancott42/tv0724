@@ -27,7 +27,7 @@ public class Application implements CommandLineRunner {
     public void run(String... args) {
         System.out.println("""
                 Welcome to Tool Rental Checkout
-                                
+                
                 Please enter a tool code from the following list:
                 """);
 

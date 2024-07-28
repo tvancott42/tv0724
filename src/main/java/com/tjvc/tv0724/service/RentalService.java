@@ -28,6 +28,16 @@ public class RentalService {
         return toolListing + "\n" + tools.stream().map(Tool::toString).collect(Collectors.joining("\n"));
     }
 
+    /**
+     * Creates a RentalAgreement based upon the inputs, and calculates the number of chargeable days given logic in
+     * @see DateService
+     *
+     * @param toolCode
+     * @param rentalDayCount
+     * @param discountPercent
+     * @param checkOutDate
+     * @return
+     */
     public RentalAgreement createRentalAgreement(String toolCode,
                                                  int rentalDayCount,
                                                  int discountPercent,
