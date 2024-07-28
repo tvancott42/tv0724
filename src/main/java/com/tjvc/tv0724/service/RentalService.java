@@ -1,14 +1,11 @@
 package com.tjvc.tv0724.service;
 
 import com.tjvc.tv0724.model.RentalAgreement;
-import com.tjvc.tv0724.model.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.stream.Collectors;
-
-import static com.tjvc.tv0724.model.Tool.DELIMITER;
 
 @Service
 public class RentalService {
